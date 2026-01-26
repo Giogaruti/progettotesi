@@ -159,8 +159,8 @@ const BUILDINGS_DATA = [
     name: "Edificio E1 + E2",
     floors: [
       { id: "m_73346441c6056802", name: "Piano Terra" },
-      { id: "m_544bceedfc4cb202", name: "Piano 1" },
-      { id: "m_a0070fa062fa8917", name: "Piano 2" },
+      { id: "m_a0070fa062fa8917", name: "Piano 1" },
+      { id: "m_544bceedfc4cb202", name: "Piano 2" },
       { id: "m_0ae87446ce0bdede", name: "Piano 3" },
     ]
   },
