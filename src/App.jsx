@@ -9,6 +9,7 @@ import {
 import { BlueDot } from "@mappedin/blue-dot";
 import { useDynamicFocus } from "@mappedin/dynamic-focus/react";
 import { Share } from "lucide-react";
+import { MapPin } from 'lucide-react';
 
 const options = {
   key: "mik_PR3UXAsnl3a6LnTRK511b0726",
@@ -163,6 +164,36 @@ function SmartWayfinding({ blueDotInstance }) {
   const dragStartY = useRef(0);
   const isDragging = useRef(false);
 
+  useMapViewEvent("click", (event) => {
+  const poi = event.pointsOfInterest?.[0];
+  const space = event.spaces?.[0];
+  const target = poi || space;
+
+  if (panelState === "full") {
+    setPanelState("partial");
+    setActiveCategory(null);
+  }
+
+  if (target && target.name) {
+    const profile = target.locationProfiles?.[0];
+    
+    // Debug rapido per essere sicuri al 100%
+    console.log("Dati orari estratti:", profile?.openingHoursSpecification);
+
+    setSelectedRoom({
+      name: target.name,
+      description: profile?.description || (poi ? "Punto di interesse esterno." : ""),
+      image: profile?.images?.[0]?.url || profile?.logoImage?.url || null,
+      // Usiamo esattamente lo stesso nome che useremo nel JSX
+      openingHours: profile?.openingHoursSpecification || null,
+      target: target,
+    });
+    mapView.Camera.focusOn(target);
+  } else {
+    setSelectedRoom(null);
+  }
+});
+
   // Legge l'URL all'avvio per aprire una stanza specifica
   useEffect(() => {
     if (mapData && mapView) {
@@ -216,39 +247,6 @@ function SmartWayfinding({ blueDotInstance }) {
     });
   };
 
-  useMapViewEvent("click", (event) => {
-    // 1. Priorità assoluta al POI (Point of Interest)
-    const poi = event.pointsOfInterest?.[0];
-    const space = event.spaces?.[0];
-    const target = poi || space;
-
-    console.log("--- DEBUG CLICK ---");
-    console.log("Target identificato:", target?.name, target);
-
-    if (panelState === "full") {
-      setPanelState("partial");
-      setActiveCategory(null);
-    }
-
-    // Verifichiamo che il target abbia un nome e non sia un'area generica
-    if (target && target.name && target.name.trim() !== "") {
-      const profile = target.locationProfiles?.[0];
-
-      setSelectedRoom({
-        name: target.name,
-        // Fallback per la descrizione se il profilo è vuoto
-        description:
-          profile?.description || (poi ? "Punto di interesse esterno." : ""),
-        // Utilizzo dell'array images[0] come da tuo log console precedente
-        image: profile?.images?.[0]?.url || profile?.logoImage?.url || null,
-        target: target,
-      });
-      mapView.Camera.focusOn(target);
-    } else {
-      // Se clicco sul vuoto, chiudo il popup
-      setSelectedRoom(null);
-    }
-  });
 
   const getSuggestions = async (query, type) => {
     if (!query || query.length < 2) {
@@ -597,6 +595,36 @@ function SmartWayfinding({ blueDotInstance }) {
                     {selectedRoom.description}
                   </p>
                 )}
+
+{selectedRoom.openingHours && selectedRoom.openingHours.length > 0 && (
+  <div style={{ 
+    margin: "12px 0", 
+    padding: "10px", 
+    backgroundColor: "#f5f5f5", 
+    borderRadius: "10px" 
+  }}>
+    <p style={{ fontSize: "13px", fontWeight: "bold", margin: "0 0 8px 0" }}>
+      🕒 Orari di apertura
+    </p>
+    {selectedRoom.openingHours.map((item, index) => (
+      <div key={index} style={{ 
+        display: "flex", 
+        justifyContent: "space-between", 
+        fontSize: "12px", 
+        marginBottom: "4px" 
+      }}>
+        <span style={{ color: "#666" }}>
+          {item.dayOfWeek.length > 2 ? "Lun - Ven" : "Sab - Dom"}
+        </span>
+        <span style={{ fontWeight: "600", color: UNIBO_RED }}>
+          {item.opens === "00:00" && item.closes === "00:00" 
+            ? "Chiuso" 
+            : `${item.opens} - ${item.closes}`}
+        </span>
+      </div>
+    ))}
+  </div>
+)}
               </div>
 
               {/* CONTENITORE BOTTONI: Portami qui + Condividi */}
@@ -896,26 +924,21 @@ function SmartWayfinding({ blueDotInstance }) {
             pathOptions: {
               visibleThroughGeometry: true,
               color: UNIBO_RED,
-              width: 0.5,
+              width: 2,
               displayArrowsOnPath: true,
               animateArrowsOnPath: true,
             },
             avatarOptions: { color: UNIBO_RED },
             createMarkers: {
-              departure: (i) =>
-                mapView.Markers.add(
-                  i.coordinate,
-                  `<div style="font-size:20px; color:${UNIBO_RED}">🔵</div>`,
-                ),
               destination: (i) =>
                 mapView.Markers.add(
                   i.coordinate,
-                  `<div style="font-size:24px">🏁</div>`,
+                  `<div style="font-size:30px">📍</div>`,
                 ),
               connection: (i) =>
                 mapView.Markers.add(
                   i.coordinate,
-                  `<div style="font-size:18px">🚪</div>`,
+                  `<div style="font-size:30px">🚪</div>`,
                 ),
             },
           }}
