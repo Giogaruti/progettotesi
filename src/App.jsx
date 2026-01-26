@@ -126,18 +126,7 @@ const CATEGORIES = [
   },
 ];
 
-const PIANI_COLORS = {
-  m_73346441c6056802: "#B3D9D9",
-  m_544bceedfc4cb202: "#B3D9D9",
-  m_a0070fa062fa8917: "#B3D9D9",
-  m_0ae87446ce0bdede: "#B3D9D9",
-  m_eeb2b5535b557a02: "#F9D0C2",
-  m_bdf57ffb0970378d: "#F9D0C2",
-  m_2d3eafe67300025c: "#F9D0C2",
-  m_c7f3cbbb678828aa: "#C2C9E0",
-  m_5dceea4b2fb7f7e2: "#C2C9E0",
-  default: "#ffffff",
-};
+
 
 // --- MAPPATURA COLORI PASTELLO SOFT ---
 const BUILDING_INTERACTION = {
@@ -160,6 +149,39 @@ function SmartWayfinding({ blueDotInstance }) {
   const [choiceModal, setChoiceModal] = useState(null);
   const [isImageFull, setIsImageFull] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [showFloorMenu, setShowFloorMenu] = useState(false);
+const [selectedBuilding, setSelectedBuilding] = useState(null);
+
+// Mappatura Edifici -> Piani (usa gli ID che vedi nei log della tua console)
+const BUILDINGS_DATA = [
+  {
+    id: "e1_e2",
+    name: "Edificio E1 + E2",
+    floors: [
+      { id: "m_73346441c6056802", name: "Piano Terra" },
+      { id: "m_544bceedfc4cb202", name: "Piano 1" },
+      { id: "m_a0070fa062fa8917", name: "Piano 2" },
+      { id: "m_0ae87446ce0bdede", name: "Piano 3" },
+    ]
+  },
+  {
+    id: "e3",
+    name: "Edificio E3",
+    floors: [
+      { id: "m_eeb2b5535b557a02", name: "Piano Terra" },
+      { id: "m_bdf57ffb0970378d", name: "Piano 1" },
+      { id: "m_2d3eafe67300025c", name: "Piano 2" },
+    ]
+  },
+  {
+    id: "e4",
+    name: "Edificio E4",
+    floors: [
+      { id: "m_c7f3cbbb678828aa", name: "Piano Terra" },
+      { id: "m_5dceea4b2fb7f7e2", name: "Piano 1" },
+    ]
+  }
+];
 
   const dragStartY = useRef(0);
   const isDragging = useRef(false);
@@ -478,6 +500,49 @@ function SmartWayfinding({ blueDotInstance }) {
     z-index: 2500; /* Sotto al popup (3000) ma sopra la mappa */
     pointer-events: auto;
 }
+
+.floor-selector-btn {
+    position: absolute;
+    right: 20px;
+    bottom: 300px; /* Sopra la bottom sheet */
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    pointer-events: auto;
+    z-index: 900;
+    border: none;
+    cursor: pointer;
+}
+
+.floor-menu {
+    position: absolute;
+    right: 80px;
+    bottom: 300px;
+    background: white;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    z-index: 2000;
+    width: 200px;
+    pointer-events: auto;
+}
+
+.floor-option {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    font-weight: 500;
+    color: #333;
+}
+
+.floor-option:last-child { border-bottom: none; }
+.floor-option:hover { background: #f0f0f0; }
             `}</style>
 
       {choiceModal && (
@@ -601,28 +666,50 @@ function SmartWayfinding({ blueDotInstance }) {
     margin: "12px 0", 
     padding: "10px", 
     backgroundColor: "#f5f5f5", 
-    borderRadius: "10px" 
+    borderRadius: "10px",
+    borderLeft: `4px solid ${UNIBO_RED}`
   }}>
-    <p style={{ fontSize: "13px", fontWeight: "bold", margin: "0 0 8px 0" }}>
+    <p style={{ fontSize: "13px", fontWeight: "bold", margin: "0 0 8px 0", color: UNIBO_BLACK }}>
       🕒 Orari di apertura
     </p>
-    {selectedRoom.openingHours.map((item, index) => (
-      <div key={index} style={{ 
-        display: "flex", 
-        justifyContent: "space-between", 
-        fontSize: "12px", 
-        marginBottom: "4px" 
-      }}>
-        <span style={{ color: "#666" }}>
-          {item.dayOfWeek.length > 2 ? "Lun - Ven" : "Sab - Dom"}
-        </span>
-        <span style={{ fontWeight: "600", color: UNIBO_RED }}>
-          {item.opens === "00:00" && item.closes === "00:00" 
-            ? "Chiuso" 
-            : `${item.opens} - ${item.closes}`}
-        </span>
-      </div>
-    ))}
+    {selectedRoom.openingHours.map((item, index) => {
+      const dayMap = {
+        'Monday': 'Lun', 'Tuesday': 'Mar', 'Wednesday': 'Mer', 
+        'Thursday': 'Gio', 'Friday': 'Ven', 'Saturday': 'Sab', 'Sunday': 'Dom'
+      };
+
+      // TRUCCO: Convertiamo sempre in array se è una stringa
+      const daysArray = Array.isArray(item.dayOfWeek) ? item.dayOfWeek : [item.dayOfWeek];
+
+      let daysText = "";
+      if (daysArray.length === 7) {
+        daysText = "Tutti i giorni";
+      } else if (daysArray.length === 5 && daysArray.includes('Monday') && daysArray.includes('Friday')) {
+        daysText = "Lun - Ven";
+      } else {
+        // Ora .map() funzionerà sempre perché daysArray è sicuramente un array
+        daysText = daysArray.map(d => dayMap[d] || d).join(', ');
+      }
+
+      return (
+        <div key={index} style={{ 
+          display: "flex", 
+          justifyContent: "space-between", 
+          fontSize: "12px", 
+          marginBottom: "4px",
+          gap: "10px"
+        }}>
+          <span style={{ color: "#666", fontWeight: "500", flexShrink: 0 }}>
+            {daysText}:
+          </span>
+          <span style={{ fontWeight: "600", color: (item.opens === "00:00" && item.closes === "00:00") ? "#999" : UNIBO_RED, textAlign: "right" }}>
+            {item.opens === "00:00" && item.closes === "00:00" 
+              ? "Chiuso" 
+              : `${item.opens} - ${item.closes}`}
+          </span>
+        </div>
+      );
+    })}
   </div>
 )}
               </div>
@@ -944,6 +1031,43 @@ function SmartWayfinding({ blueDotInstance }) {
           }}
         />
       )}
+
+      {/* Bottone Floating */}
+<button className="floor-selector-btn" onClick={() => setShowFloorMenu(!showFloorMenu)}>
+  🏢
+</button>
+
+{/* Menu di Selezione */}
+{showFloorMenu && (
+  <div className="floor-menu">
+    {!selectedBuilding ? (
+      <>
+        <div style={{fontWeight: 'bold', padding: '10px', color: UNIBO_RED}}>Seleziona Edificio</div>
+        {BUILDINGS_DATA.map(b => (
+          <div key={b.id} className="floor-option" onClick={() => setSelectedBuilding(b)}>
+            {b.name} ➔
+          </div>
+        ))}
+      </>
+    ) : (
+      <>
+        <div style={{fontWeight: 'bold', padding: '10px', color: UNIBO_RED}} onClick={() => setSelectedBuilding(null)}>
+          ⬅ Torna indietro
+        </div>
+        <div style={{padding: '5px 10px', fontSize: '11px', color: '#888'}}>{selectedBuilding.name}</div>
+        {selectedBuilding.floors.map(f => (
+          <div key={f.id} className="floor-option" onClick={() => {
+            mapView.setFloor(f.id);
+            setShowFloorMenu(false);
+            setSelectedBuilding(null);
+          }}>
+            {f.name}
+          </div>
+        ))}
+      </>
+    )}
+  </div>
+)}
     </div>
   );
 }
