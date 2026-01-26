@@ -468,31 +468,63 @@ function SmartWayfinding({ blueDotInstance }) {
         85% { opacity: 1; transform: translate(-50%, 0); }
         100% { opacity: 0; transform: translate(-50%, -100%); }
     }
+
+    /* Overlay che copre tutto lo schermo dietro il popup */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.2); /* Sfondo leggermente oscurato */
+    z-index: 2500; /* Sotto al popup (3000) ma sopra la mappa */
+    pointer-events: auto;
+}
             `}</style>
 
       {choiceModal && (
-        <div className="choice-modal">
-          <h3>{choiceModal.name}</h3>
-          <p>Usa questa posizione come:</p>
-          <button
-            className="choice-btn primary"
-            onClick={() => {
-              setDestQuery(choiceModal.name);
-              setChoiceModal(null);
-            }}
+        <>
+          {/* Overlay di sfondo cliccabile per chiudere */}
+          <div 
+            className="modal-backdrop" 
+            onClick={() => setChoiceModal(null)} 
+          />
+          
+          <div 
+            className="choice-modal" 
+            onClick={(e) => e.stopPropagation()} // Impedisce la chiusura se clicchi dentro il popup
+            style={{ zIndex: 3000 }} // Assicuriamoci che stia sopra l'overlay
           >
-            🏁 Destinazione
-          </button>
-          <button
-            className="choice-btn"
-            onClick={() => {
-              setStartQuery(choiceModal.name);
-              setChoiceModal(null);
-            }}
-          >
-            🔍 Punto di partenza
-          </button>
-        </div>
+            <h3>{choiceModal.name}</h3>
+            <p>Usa questa posizione come:</p>
+            <button
+              className="choice-btn primary"
+              onClick={() => {
+                setDestQuery(choiceModal.name);
+                setChoiceModal(null);
+              }}
+            >
+              🏁 Destinazione
+            </button>
+            <button
+              className="choice-btn"
+              onClick={() => {
+                setStartQuery(choiceModal.name);
+                setChoiceModal(null);
+              }}
+            >
+              🔍 Punto di partenza
+            </button>
+            {/* Tasto annulla facoltativo, dato che ora puoi cliccare fuori */}
+            <button 
+                className="choice-btn" 
+                style={{ border: "none", color: "#888", marginTop: "5px" }} 
+                onClick={() => setChoiceModal(null)}
+            >
+                Chiudi
+            </button>
+          </div>
+        </>
       )}
 
       {selectedRoom && (
