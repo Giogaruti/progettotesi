@@ -330,7 +330,9 @@ function SmartWayfinding({ blueDotInstance }) {
     const poi = event.pointsOfInterest?.[0];
     const space = event.spaces?.[0];
     const annotation = event.annotations?.[0];
-    const target = annotation || poi || space;
+    const label = event.labels?.[0];
+
+    const target = poi || space || label?.target;
 
     // 3. RESET COLORE: Se c'era una stanza selezionata, riportala a bianco prima di procedere
     if (selectedRoom && selectedRoom.target) {
@@ -1504,20 +1506,7 @@ const startNavigation = async (startName, destName) => {
               visible: true,
               color: UNIBO_RED,
             },
-            createMarkers: {
-        connection: (instruction) => {
-          // Crea un marker testuale con l'emoticon della porta [cite: 813, 1737]
-          return mapView.Markers.add(
-            instruction.coordinate, 
-            `<div style="font-size: 30px;">🚪</div>`, 
-            {
-              interactive: true,
-              rank: "always-visible" // Assicura che l'emoticon sia sempre visibile 
-            }
-          );
-        }
-      },
-    }}
+}}
         />
       )}
 
