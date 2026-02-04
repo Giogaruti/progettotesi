@@ -19,9 +19,9 @@ import { MapPin } from "lucide-react";
 import { WALLS } from "@mappedin/mappedin-js";
 
 const options = {
-  key: "mik_PR3UXAsnl3a6LnTRK511b0726",
+  key: "mik_XyDzI7uiMbmwy6hoP587807f7",
 
-  secret: "mis_e9JbalSWHAgWYLbTTirFvRXBrfjWexqvo14akJw9yzi98161136",
+  secret: "mis_DTert4P9ZbYwygjmefSB98U7XbueODXz6VdSFJJahyZ959b109b",
 
   mapId: "689f7c80dc0905000b1393fe",
 };
@@ -87,7 +87,7 @@ const STANZE_E2 = [
   "Lab 1",
   "Lab 2",
   "Lab 3",
-  "Mensa"
+  "Mensa",
 ];
 
 const STANZE_E3 = [
@@ -104,10 +104,7 @@ const STANZE_E3 = [
 
 const STANZE_E4 = ["Aula 8.1"];
 
-const STANZE_E5 = [
-  "Aula Trasporti",
-  "Lab di Fotografia",
-];
+const STANZE_E5 = ["Aula Trasporti", "Lab di Fotografia"];
 
 const CATEGORIES = [
   {
@@ -116,52 +113,52 @@ const CATEGORIES = [
     icon: "📖",
     items: [
       "Aula 0.1",
-  "Aula 0.2",
-  "Aula 0.4",
-  "Aula 0.5",
-  "Aula 0.6",
-  "Aula 0.7",
-  "Aula 0.8",
-  "Aula 1.2",
-  "Aula 1.3",
-  "Aula 1.4",
-  "Aula 1.5",
-  "Aula 1.6",
-  "Aula 2.2",
-  "Aula 2.3",
-  "Aula 2.4",
-  "Aula 2.5",
-  "Aula 2.6",
-  "Aula 2.7A",
-  "Aula 2.7B",
-  "Aula 2.8",
-  "Aula 2.9",
-  "Aula 3.1",
-  "Aula 3.3",
-  "Aula 3.4",
-  "Aula 3.6",
-  "Aula 4.1",
-  "Aula 4.2",
-  "Aula 5.1",
-  "Aula 5.2",
-  "Aula 5.4",
-  "Aula 5.5",
-  "Aula 5.6",
-  "Aula 5.7",
-  "Aula 6.1",
-  "Aula 6.2",
-  "Aula I",
-  "Aula II",
-  "Aula III",
-  "Aula IX",
-  "Aula V",
-  "Aula VI",
-  "Aula VII",
-  "Aula VIII",
-  "Aula IX",
-  "Aula 8.1",
-  "Aula Trasporti",
-  "Aula Magna",
+      "Aula 0.2",
+      "Aula 0.4",
+      "Aula 0.5",
+      "Aula 0.6",
+      "Aula 0.7",
+      "Aula 0.8",
+      "Aula 1.2",
+      "Aula 1.3",
+      "Aula 1.4",
+      "Aula 1.5",
+      "Aula 1.6",
+      "Aula 2.2",
+      "Aula 2.3",
+      "Aula 2.4",
+      "Aula 2.5",
+      "Aula 2.6",
+      "Aula 2.7A",
+      "Aula 2.7B",
+      "Aula 2.8",
+      "Aula 2.9",
+      "Aula 3.1",
+      "Aula 3.3",
+      "Aula 3.4",
+      "Aula 3.6",
+      "Aula 4.1",
+      "Aula 4.2",
+      "Aula 5.1",
+      "Aula 5.2",
+      "Aula 5.4",
+      "Aula 5.5",
+      "Aula 5.6",
+      "Aula 5.7",
+      "Aula 6.1",
+      "Aula 6.2",
+      "Aula I",
+      "Aula II",
+      "Aula III",
+      "Aula IX",
+      "Aula V",
+      "Aula VI",
+      "Aula VII",
+      "Aula VIII",
+      "Aula IX",
+      "Aula 8.1",
+      "Aula Trasporti",
+      "Aula Magna",
     ],
   },
 
@@ -171,14 +168,14 @@ const CATEGORIES = [
     icon: "💻",
     items: [
       "Lab 0",
-  "Lab 4",
-  "Lab 5",
-  "Lab 9",
-  "Lab 1",
-  "Lab 2",
-  "Lab 3",
-  "Lab di Fotografia",
-],
+      "Lab 4",
+      "Lab 5",
+      "Lab 9",
+      "Lab 1",
+      "Lab 2",
+      "Lab 3",
+      "Lab di Fotografia",
+    ],
   },
 
   { id: "ristoro", label: "Ristoro", icon: "☕", items: ["Bar", "Mensa"] },
@@ -189,10 +186,10 @@ const CATEGORIES = [
     icon: "🚻",
     items: [
       "Sala studio 0.3",
-  "Sala studio 0.4",
-  "Sala Consiglio",
-"Biblioteca Dore",
-"Portineria",
+      "Sala studio 0.4",
+      "Sala Consiglio",
+      "Biblioteca Dore",
+      "Portineria",
     ],
   },
 
@@ -284,11 +281,11 @@ function SmartWayfinding({ blueDotInstance }) {
       name: "Edificio E1 + E2",
 
       floors: [
-        { id: "m_12ed62f23066cfa7", name: "Piano -1" },
-        { id: "m_73346441c6056802", name: "Piano Terra" },
-        { id: "m_a0070fa062fa8917", name: "Piano 1" },
-        { id: "m_544bceedfc4cb202", name: "Piano 2" },
         { id: "m_0ae87446ce0bdede", name: "Piano 3" },
+        { id: "m_544bceedfc4cb202", name: "Piano 2" },
+        { id: "m_a0070fa062fa8917", name: "Piano 1" },
+        { id: "m_73346441c6056802", name: "Piano Terra" },
+        { id: "m_12ed62f23066cfa7", name: "Piano -1" },
       ],
     },
     {
@@ -297,11 +294,9 @@ function SmartWayfinding({ blueDotInstance }) {
       name: "Edificio E3",
 
       floors: [
-        { id: "m_eeb2b5535b557a02", name: "Piano Terra" },
-
-        { id: "m_bdf57ffb0970378d", name: "Piano 1" },
-
         { id: "m_2d3eafe67300025c", name: "Piano 2" },
+        { id: "m_bdf57ffb0970378d", name: "Piano 1" },
+        { id: "m_eeb2b5535b557a02", name: "Piano Terra" },
       ],
     },
     {
@@ -310,9 +305,8 @@ function SmartWayfinding({ blueDotInstance }) {
       name: "Edificio E4",
 
       floors: [
-        { id: "m_c7f3cbbb678828aa", name: "Piano Terra" },
-
         { id: "m_5dceea4b2fb7f7e2", name: "Piano 1" },
+        { id: "m_c7f3cbbb678828aa", name: "Piano Terra" },
       ],
     },
     {
@@ -320,9 +314,7 @@ function SmartWayfinding({ blueDotInstance }) {
 
       name: "Edificio E5",
 
-      floors: [
-        { id: "m_be1fca4d192f8bda", name: "Piano Terra" },
-      ],
+      floors: [{ id: "m_be1fca4d192f8bda", name: "Piano Terra" }],
     },
   ];
 
@@ -331,30 +323,46 @@ function SmartWayfinding({ blueDotInstance }) {
   const isDragging = useRef(false);
 
   useMapViewEvent("click", (event) => {
-    // 1. Estraiamo tutti i possibili target dal payload del click [cite: 633]
+    // 1. Blocca l'interazione se la navigazione è in corso
+    if (directions) return;
 
+    // 2. Estrazione target
     const poi = event.pointsOfInterest?.[0];
-
     const space = event.spaces?.[0];
-
-    const annotation = event.annotations?.[0]; // Supporto per Safety Annotations
-
-    // Ordine di priorità: Annotazione > POI > Spazio
-
+    const annotation = event.annotations?.[0];
     const target = annotation || poi || space;
 
+    // 3. RESET COLORE: Se c'era una stanza selezionata, riportala a bianco prima di procedere
+    if (selectedRoom && selectedRoom.target) {
+      mapView.updateState(selectedRoom.target, { color: "#ffffff" });
+    }
+
+    // 4. Gestione chiusura pannello categorie se aperto
     if (panelState === "full") {
       setPanelState("partial");
       setActiveCategory(null);
     }
 
-    // --- NUOVO CONTROLLO: Nome presente? ---
-    // Verifichiamo se esiste un nome reale. Se non c'è, chiudiamo il popup e usciamo.
-    const displayName = target?.name || target?.type;
+    const displayName = target?.name || target?.type || "";
+    const lowerName = displayName.toLowerCase();
 
-    if (target && displayName && displayName.trim() !== "") {
+    // 5. FILTRO: Se il nome contiene "room", "hallway" o è vuoto, non mostrare nulla
+    const isUndefined = lowerName.includes("room") || 
+                        lowerName.includes("hallway") || 
+                        displayName.trim() === "";
+
+    if (target && !isUndefined) {
       const profile = target.locationProfiles?.[0];
+      
+      // Determina il colore in base all'edificio (usando la tua logica BUILDING_INTERACTION)
+      let highlightColor = BUILDING_INTERACTION.default.color || BUILDING_INTERACTION.default;
+      if (STANZE_E1.includes(displayName)) highlightColor = BUILDING_INTERACTION["fc_94b7a4dd7fee1f8f"].color;
+      else if (STANZE_E2.includes(displayName)) highlightColor = BUILDING_INTERACTION["fc_94b7a4dd7fee1f8a"].color;
+      else if (STANZE_E3.includes(displayName)) highlightColor = BUILDING_INTERACTION["fc_7a4dd7fee1f8f330"].color;
+      else if (STANZE_E4.includes(displayName)) highlightColor = BUILDING_INTERACTION["fc_dd7fee1f8f330c42"].color;
+      else if (STANZE_E5.includes(displayName)) highlightColor = BUILDING_INTERACTION["fc_351964552d388fd2"].color;
 
+      // 6. Impostazione della stanza selezionata
       setSelectedRoom({
         name: displayName,
         description: profile?.description || (annotation ? "Presidio di sicurezza." : ""),
@@ -363,56 +371,73 @@ function SmartWayfinding({ blueDotInstance }) {
         target: target,
       });
 
+      // 7. Colora la stanza cliccata e sposta la camera
+      mapView.updateState(target, { color: highlightColor });
       mapView.Camera.focusOn(target);
     } else {
-      // Se clicchi su un'area senza nome (es. corridoio o spazio vuoto), chiudi il popup
+      // 8. Se clicchi su un corridoio, area grigia o spazio vuoto, chiudi il popup
       setSelectedRoom(null);
     }
   });
-useEffect(() => {
-  if (!mapData) return;
-
-  console.log("%c--- 🏢 REPORT STRUTTURA MAPPA ---", "color: #bb2e29; font-weight: bold; font-size: 16px;");
-
-  // 1. ELENCO EDIFICI (FACADE)
-  console.group("🧱 ID EDIFICI (FACADE)");
-  const facades = mapData.getByType("facade");
-  if (facades.length > 0) {
-    facades.forEach((f) => {
-      console.log(`ID: %c${f.id}%c | Nome: ${f.name || "Nessun nome"}`, "color: blue; font-weight: bold", "color: inherit");
-    });
-  } else {
-    console.log("Nessuna facciata trovata.");
-  }
-  console.groupEnd();
-
-  // 2. ELENCO PIANI (FLOOR)
-  console.group("📶 ID PIANI (FLOORS)");
-  const floors = mapData.getByType("floor");
-  if (floors.length > 0) {
-    floors.forEach((f) => {
-      console.log(`ID: %c${f.id}%c | Nome: ${f.name} | Elevazione: ${f.elevation}`, "color: green; font-weight: bold", "color: inherit");
-    });
-  } else {
-    console.log("Nessun piano trovato.");
-  }
-  console.groupEnd();
-
-  console.log("%c--------------------------------", "color: #bb2e29; font-weight: bold;");
-}, [mapData]);
   
-useEffect(() => {
-  if (!directions || !mapView) return;
+  useEffect(() => {
+    if (!mapData) return;
 
-  // Quando iniziano le direzioni, seguiamo il primo set di coordinate
-  const firstInstruction = directions.instructions[0];
-  if (firstInstruction && firstInstruction.coordinate.floorId) {
-    mapView.setFloor(firstInstruction.coordinate.floorId);
-  }
-  
-  // Opzionale: Focus automatico sul percorso completo all'inizio
-  mapView.Camera.focusOn(directions.coordinates);
-}, [directions, mapView]);
+    console.log(
+      "%c--- 🏢 REPORT STRUTTURA MAPPA ---",
+      "color: #bb2e29; font-weight: bold; font-size: 16px;",
+    );
+
+    // 1. ELENCO EDIFICI (FACADE)
+    console.group("🧱 ID EDIFICI (FACADE)");
+    const facades = mapData.getByType("facade");
+    if (facades.length > 0) {
+      facades.forEach((f) => {
+        console.log(
+          `ID: %c${f.id}%c | Nome: ${f.name || "Nessun nome"}`,
+          "color: blue; font-weight: bold",
+          "color: inherit",
+        );
+      });
+    } else {
+      console.log("Nessuna facciata trovata.");
+    }
+    console.groupEnd();
+
+    // 2. ELENCO PIANI (FLOOR)
+    console.group("📶 ID PIANI (FLOORS)");
+    const floors = mapData.getByType("floor");
+    if (floors.length > 0) {
+      floors.forEach((f) => {
+        console.log(
+          `ID: %c${f.id}%c | Nome: ${f.name} | Elevazione: ${f.elevation}`,
+          "color: green; font-weight: bold",
+          "color: inherit",
+        );
+      });
+    } else {
+      console.log("Nessun piano trovato.");
+    }
+    console.groupEnd();
+
+    console.log(
+      "%c--------------------------------",
+      "color: #bb2e29; font-weight: bold;",
+    );
+  }, [mapData]);
+
+  useEffect(() => {
+    if (!directions || !mapView) return;
+
+    // Quando iniziano le direzioni, seguiamo il primo set di coordinate
+    const firstInstruction = directions.instructions[0];
+    if (firstInstruction && firstInstruction.coordinate.floorId) {
+      mapView.setFloor(firstInstruction.coordinate.floorId);
+    }
+
+    // Opzionale: Focus automatico sul percorso completo all'inizio
+    mapView.Camera.focusOn(directions.coordinates);
+  }, [directions, mapView]);
 
   useEffect(() => {
     if (mapData && mapView) {
@@ -513,41 +538,45 @@ useEffect(() => {
     }
   };
 
-  const startNavigation = async (startName, destName) => {
-  try {
-    const allSpaces = mapData.getByType("space");
-    const allPois = mapData.getByType("point-of-interest");
+  // --- All'interno di SmartWayfinding -> startNavigation ---
 
-    const findTarget = (name) =>
-      allSpaces.find((s) => s.name === name) ||
-      allPois.find((p) => p.name === name);
+const startNavigation = async (startName, destName) => {
+    try {
+        const allSpaces = mapData.getByType("space");
+        const allPois = mapData.getByType("point-of-interest");
 
-    const destination = findTarget(destName);
-    let departure;
+        const findTarget = (name) =>
+            allSpaces.find((s) => s.name === name) ||
+            allPois.find((p) => p.name === name);
 
-    if (startName.includes("Mia Posizione")) {
-      departure = blueDotInstance?.position;
-    } else {
-      departure = findTarget(startName);
-    }
+        const destination = findTarget(destName);
+        let departure;
 
-    if (departure && destination) {
-      const result = await mapData.getDirections(departure, destination);
-      if (result) {
-        setDirections(result);
-        
-        // Forza il piano della mappa su quello della partenza
-        const startFloorId = result.instructions[0].coordinate.floorId;
-        if (startFloorId) {
-          mapView.setFloor(startFloorId);
+        if (startName === "Mia Posizione" || startName === "") {
+            // Estrae la coordinata dall'istanza del Blue Dot [cite: 191]
+            departure = blueDotInstance?.position?.coordinate;
+            
+            // Fallback manuale se l'istanza non ha ancora i dati caricati
+            if (!departure) {
+                departure = mapView.createCoordinate(44.48794636, 11.33062005);
+            }
+        } else {
+            departure = findTarget(startName);
         }
 
-        setPanelState("partial");
-      }
+        if (departure && destination) {
+            const result = await mapData.getDirections(departure, destination);
+            if (result) {
+                setDirections(result);
+                setPanelState("partial");
+                
+                // Opzionale: centra la camera sulla partenza
+                mapView.Camera.focusOn(departure);
+            }
+        }
+    } catch (e) {
+        console.error("Errore nella navigazione:", e);
     }
-  } catch (e) {
-    console.error("Errore nella navigazione:", e);
-  }
 };
 
   const handleLocationChoice = (name) => {
@@ -1200,32 +1229,32 @@ useEffect(() => {
           <div style={{ position: "relative" }}>
             {/* INPUT PARTENZA */}
             {/* Pulsante X Globale per annullare il percorso */}
-    {directions && (
-      <button
-        onClick={clearRoute}
-        style={{
-          position: "absolute",
-          right: "-5px",
-          top: "-35px",
-          background: "#ff3b30",
-          color: "white",
-          border: "none",
-          borderRadius: "100%",
-          width: "24px",
-          height: "24px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
-          zIndex: 10,
-          boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
-          fontWeight: "bold",
-          fontSize: "12px"
-        }}
-      >
-        ✕
-      </button>
-    )}
+            {directions && (
+              <button
+                onClick={clearRoute}
+                style={{
+                  position: "absolute",
+                  right: "-5px",
+                  top: "-35px",
+                  background: "#ff3b30",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "100%",
+                  width: "24px",
+                  height: "24px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  zIndex: 10,
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+                  fontWeight: "bold",
+                  fontSize: "12px",
+                }}
+              >
+                ✕
+              </button>
+            )}
 
             <div className="search-input-wrapper">
               <span>🔍</span>
@@ -1392,7 +1421,6 @@ useEffect(() => {
               ? "Inserisci partenza e arrivo"
               : "Inizia Navigazione"}
           </button>
-
         </div>
 
         <div
@@ -1449,38 +1477,49 @@ useEffect(() => {
       </div>
 
       {directions && (
-  <Navigation
-    directions={directions}
-    onStepChange={(step) => {
-      if (step.coordinate.floorId) {
-        // 1. Cambia il piano
-        mapView.setFloor(step.coordinate.floorId);
-        
-        // 2. Forza la modalità Flat (rimuove l'effetto X-Ray tra i piani)
-        mapView.setFlat(true); 
+        <Navigation
+          directions={directions}
+          onStepChange={(step) => {
+            if (step.coordinate.floorId) {
+              // 1. Cambia il piano
+              mapView.setFloor(step.coordinate.floorId);
 
-        // 3. Opzionale: centra la telecamera sul nuovo piano
-        mapView.Camera.focusOn(step.coordinate);
-      }
-    }}
-    options={{
-      pathOptions: {
-        color: UNIBO_RED,
-        width: 2,
-        displayArrowsOnPath: true,
-        animateArrowsOnPath: true,
-        // FONDAMENTALE: impedisce al percorso di essere visto attraverso i solai
-        visibleThroughGeometry: false, 
-      },
-      avatarOptions: {
-        visible: true,
-        color: UNIBO_RED,
-      },
-    }}
-  />
-)}
+              // 2. Forza la modalità Flat (rimuove l'effetto X-Ray tra i piani)
+              mapView.setFlat(true);
 
-      {/* Bottone Floating */}
+              // 3. Opzionale: centra la telecamera sul nuovo piano
+              mapView.Camera.focusOn(step.coordinate);
+            }
+          }}
+          options={{
+            pathOptions: {
+              color: UNIBO_RED,
+              width: 1.7,
+              displayArrowsOnPath: true,
+              animateArrowsOnPath: true,
+              // FONDAMENTALE: impedisce al percorso di essere visto attraverso i solai
+              visibleThroughGeometry: false,
+            },
+            avatarOptions: {
+              visible: true,
+              color: UNIBO_RED,
+            },
+            createMarkers: {
+        connection: (instruction) => {
+          // Crea un marker testuale con l'emoticon della porta [cite: 813, 1737]
+          return mapView.Markers.add(
+            instruction.coordinate, 
+            `<div style="font-size: 30px;">🚪</div>`, 
+            {
+              interactive: true,
+              rank: "always-visible" // Assicura che l'emoticon sia sempre visibile 
+            }
+          );
+        }
+      },
+    }}
+        />
+      )}
 
       <button
         className="floor-selector-btn"
@@ -1488,8 +1527,6 @@ useEffect(() => {
       >
         🏢
       </button>
-
-      {/* Menu di Selezione */}
 
       {showFloorMenu && (
         <div className="floor-menu">
@@ -1603,8 +1640,6 @@ function MapManagers({ onBlueDotInit }) {
       opacity: 1,
     });
 
-    // 3. Applica il colore ai muri interni (leggermente più chiari per contrasto) [cite: 2389]
-
     mapView.updateState(WALLS.Interior, {
       visible: true,
 
@@ -1614,8 +1649,6 @@ function MapManagers({ onBlueDotInit }) {
 
       opacity: 1,
     });
-
-    // --- COLORAZIONE STANZE ---
 
     mapData.getByType("space").forEach((space) => {
       const name = space.name || "";
@@ -1681,34 +1714,28 @@ function MapManagers({ onBlueDotInit }) {
 
     if (mapView.__EXPERIMENTAL__auto) mapView.__EXPERIMENTAL__auto();
 
-    // Imposta la mappa sul piano terra all'avvio
-
     if (groundFloor) {
       mapView.setFloor(groundFloor.id);
     }
 
-    // 1. Inizializza Blue Dot reale
+    const bd = new BlueDot(mapView);
 
-    // --- Dentro MapManagers -> useEffect ---
+    bd.enable({
+      watchDevicePosition: false,
+      color: UNIBO_RED,
+      // Aumentiamo il timeout a 1 ora (in ms) per evitare che diventi grigio
+      timeout: 3600000,
+    });
 
-// 1. Inizializza Blue Dot
-const bd = new BlueDot(mapView);
+    // Forziamo l'aggiornamento immediato della posizione [cite: 169]
+    bd.update({
+      latitude: 44.48794636,
+      longitude: 11.33062005,
+      floorOrFloorId: "m_73346441c6056802", // ID Piano Terra E1/E2 [cite: 181]
+      accuracy: 10, // Valore basso per renderlo blu brillante [cite: 149]
+    });
 
-// 2. Abilitalo SENZA tracciamento posizione reale
-bd.enable({
-  watchDevicePosition: false, // <--- Fondamentale: disattiva il GPS
-  color: UNIBO_RED,
-  position: {
-    coordinate: {
-      latitude: 44.48794636, // Inserisci il valore ottenuto
-    longitude: 11.33062005 // Sostituisci con valore reale
-    },
-  }
-});
-
-// Passiamo l'istanza al componente genitore per la navigazione
-onBlueDotInit(bd);
-
+    onBlueDotInit(bd);
 
     return () => {
       bd.disable();
