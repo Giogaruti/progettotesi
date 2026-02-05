@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-
 import {
   MapView,
   useMapData,
@@ -7,17 +6,10 @@ import {
   Navigation,
   useMapViewEvent,
 } from "@mappedin/react-sdk";
-
 import { BlueDot } from "@mappedin/blue-dot";
-
 import { useDynamicFocus } from "@mappedin/dynamic-focus/react";
-
 import { Share } from "lucide-react";
-
-import { MapPin } from "lucide-react";
-
 import { WALLS } from "@mappedin/mappedin-js";
-
 const options = {
   key: "mik_XyDzI7uiMbmwy6hoP587807f7",
 
@@ -229,8 +221,6 @@ const CATEGORIES = [
   },
 ];
 
-// --- MAPPATURA COLORI PASTELLO SOFT ---
-
 const BUILDING_INTERACTION = {
   fc_94b7a4dd7fee1f8f: { name: "E1 + E2", color: "#B3D9D9" },
 
@@ -247,29 +237,17 @@ const BUILDING_INTERACTION = {
 
 function SmartWayfinding({ blueDotInstance }) {
   const { mapView, mapData } = useMap();
-
   const [startQuery, setStartQuery] = useState("");
-
   const [destQuery, setDestQuery] = useState("");
-
   const [suggestions, setSuggestions] = useState({ start: [], dest: [] });
-
   const [directions, setDirections] = useState(null);
-
   const [selectedRoom, setSelectedRoom] = useState(null);
-
   const [panelState, setPanelState] = useState("partial");
-
   const [activeCategory, setActiveCategory] = useState(null);
-
   const [choiceModal, setChoiceModal] = useState(null);
-
   const [isImageFull, setIsImageFull] = useState(false);
-
   const [showToast, setShowToast] = useState(false);
-
   const [showFloorMenu, setShowFloorMenu] = useState(false);
-
   const [selectedBuilding, setSelectedBuilding] = useState(null);
 
   // Mappatura Edifici -> Piani (usa gli ID che vedi nei log della tua console)
@@ -294,8 +272,8 @@ function SmartWayfinding({ blueDotInstance }) {
       name: "Edificio E3",
 
       floors: [
-        { id: "m_2d3eafe67300025c", name: "Piano 2" },
-        { id: "m_bdf57ffb0970378d", name: "Piano 1" },
+        { id: "m_bdf57ffb0970378d", name: "Piano 2" },
+        { id: "m_2d3eafe67300025c", name: "Piano 1" },
         { id: "m_eeb2b5535b557a02", name: "Piano Terra" },
       ],
     },
@@ -332,7 +310,7 @@ function SmartWayfinding({ blueDotInstance }) {
     const annotation = event.annotations?.[0];
     const label = event.labels?.[0];
 
-    const target = poi || space || label?.target;
+    const target = annotation || poi || space || label?.target;
 
     // 3. RESET COLORE: Se c'era una stanza selezionata, riportala a bianco prima di procedere
     if (selectedRoom && selectedRoom.target) {
@@ -462,6 +440,10 @@ function SmartWayfinding({ blueDotInstance }) {
           setTimeout(() => {
             const profile = target.locationProfiles?.[0];
 
+            if (target.floor) {
+              mapView.setFloor(target.floor.id);
+            }
+
             setSelectedRoom({
               name: target.name,
 
@@ -540,7 +522,6 @@ function SmartWayfinding({ blueDotInstance }) {
     }
   };
 
-  // --- All'interno di SmartWayfinding -> startNavigation ---
 
 const startNavigation = async (startName, destName) => {
     try {
