@@ -272,7 +272,6 @@ function SmartWayfinding({ blueDotInstance }) {
       name: "Edificio E3",
 
       floors: [
-        { id: "m_bdf57ffb0970378d", name: "Piano 2" },
         { id: "m_2d3eafe67300025c", name: "Piano 1" },
         { id: "m_eeb2b5535b557a02", name: "Piano Terra" },
       ],
@@ -334,6 +333,7 @@ function SmartWayfinding({ blueDotInstance }) {
     if (target && !isUndefined) {
       const profile = target.locationProfiles?.[0];
       
+      
       // Determina il colore in base all'edificio (usando la tua logica BUILDING_INTERACTION)
       let highlightColor = BUILDING_INTERACTION.default.color || BUILDING_INTERACTION.default;
       if (STANZE_E1.includes(displayName)) highlightColor = BUILDING_INTERACTION["fc_94b7a4dd7fee1f8f"].color;
@@ -348,6 +348,7 @@ function SmartWayfinding({ blueDotInstance }) {
         description: profile?.description || (annotation ? "Presidio di sicurezza." : ""),
         image: profile?.images?.[0]?.url || target.icon?.url || null,
         openingHours: profile?.openingHoursSpecification || null,
+        link: profile?.links?.[0]?.url || null,
         target: target,
       });
 
@@ -880,322 +881,200 @@ const startNavigation = async (startName, destName) => {
       )}
 
       {selectedRoom && (
-        <>
-          {/* Visualizzazione Full Screen (lasciare quella esistente) */}
+  <>
+    {/* Visualizzazione Full Screen */}
+    {isImageFull && selectedRoom.image && (
+      <div 
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          backgroundColor: "rgba(0,0,0,0.9)",
+          zIndex: 5000,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+        onClick={() => setIsImageFull(false)}
+      >
+        <img
+          src={selectedRoom.image}
+          style={{ maxWidth: "90%", maxHeight: "90%", borderRadius: "10px" }}
+          onClick={(e) => e.stopPropagation()}
+        />
+      </div>
+    )}
 
-          {isImageFull && selectedRoom.image && (
-            <div onClick={() => setIsImageFull(false)}>
-              <img
-                src={selectedRoom.image}
-                onClick={(e) => e.stopPropagation()}
-              />
-            </div>
-          )}
+    <div
+      className="top-details-overlay"
+      style={{
+        pointerEvents: "auto",
+        display: "flex",
+        flexDirection: "column",
+        width: "90%", // Assicura che riprenda la larghezza corretta
+        maxWidth: "400px"
+      }}
+    >
+      {selectedRoom.image && (
+        <div
+          onClick={() => setIsImageFull(true)}
+          style={{
+            width: "100%",
+            height: "180px",
+            overflow: "hidden",
+            background: "#eee",
+            cursor: "zoom-in",
+            flexShrink: 0,
+          }}
+        >
+          <img
+            src={selectedRoom.image}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            alt={selectedRoom.name}
+          />
+        </div>
+      )}
 
-          <div
-            className="top-details-overlay"
+      <div
+        className="top-details-content"
+        style={{
+          padding: "15px",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <div className="top-details-info" style={{ width: "100%" }}>
+          <h3
             style={{
-              pointerEvents: "auto",
-
-              display: "flex",
-
-              flexDirection: "column",
+              margin: "0 0 8px 0",
+              color: UNIBO_BLACK,
+              fontSize: "25px",
+              fontWeight: "bold",
+              lineHeight: "1.2",
+              textAlign: "center",
             }}
           >
-            {selectedRoom.image && (
-              <div
-                onClick={() => setIsImageFull(true)}
-                style={{
-                  width: "100%",
+            {selectedRoom.name}
+          </h3>
 
-                  height: "180px",
-
-                  overflow: "hidden",
-
-                  background: "#eee",
-
-                  cursor: "zoom-in",
-
-                  flexShrink: 0,
-                }}
-              >
-                <img
-                  src={selectedRoom.image}
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  alt={selectedRoom.name}
-                />
-              </div>
-            )}
-
-            <div
-              className="top-details-content"
+          {selectedRoom.description && (
+            <p
               style={{
-                padding: "15px",
-
-                display: "flex",
-
-                flexDirection: "column",
+                margin: "0 0 10px 0",
+                fontSize: "14px",
+                color: "#555",
+                lineHeight: "1.4",
               }}
             >
-              <div className="top-details-info">
-                <h3
+              {selectedRoom.description}
+            </p>
+          )}
+
+          {/* LINK SEMPLICE E CLICCABILE */}
+          {selectedRoom.link && (
+            <a
+              href={selectedRoom.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "block",
+                margin: "0 0 10px 0",
+                fontSize: "14px",
+                fontWeight: "600",
+                color: UNIBO_RED,
+                textDecoration: "none",
+                wordBreak: "break-all",
+                textAlign: "center",
+              }}
+            >
+              Disponibilità Orari
+            </a>
+          )}
+
+          {selectedRoom.openingHours &&
+            selectedRoom.openingHours.length > 0 && (
+              <div
+                style={{
+                  margin: "12px 0",
+                  padding: "10px",
+                  backgroundColor: "#f5f5f5",
+                  borderRadius: "10px",
+                  borderLeft: `4px solid ${UNIBO_RED}`,
+                }}
+              >
+                <p
                   style={{
+                    fontSize: "13px",
+                    fontWeight: "bold",
                     margin: "0 0 8px 0",
-
                     color: UNIBO_BLACK,
-
-                    fontSize: "20px",
                   }}
                 >
-                  {selectedRoom.name}
-                </h3>
+                  🕒 Orari di apertura
+                </p>
 
-                {selectedRoom.description && (
-                  <p
-                    style={{
-                      margin: "0 0 15px 0",
+                {selectedRoom.openingHours.map((item, index) => {
+                  const dayMap = { Monday: "Lun", Tuesday: "Mar", Wednesday: "Mer", Thursday: "Gio", Friday: "Ven", Saturday: "Sab", Sunday: "Dom" };
+                  const daysArray = Array.isArray(item.dayOfWeek) ? item.dayOfWeek : [item.dayOfWeek];
+                  let daysText = daysArray.length === 7 ? "Tutti i giorni" : (daysArray.length === 5 && daysArray.includes("Monday") ? "Lun - Ven" : daysArray.map((d) => dayMap[d] || d).join(", "));
 
-                      fontSize: "14px",
-
-                      color: "#555",
-
-                      lineHeight: "1.4",
-                    }}
-                  >
-                    {selectedRoom.description}
-                  </p>
-                )}
-
-                {selectedRoom.openingHours &&
-                  selectedRoom.openingHours.length > 0 && (
-                    <div
-                      style={{
-                        margin: "12px 0",
-
-                        padding: "10px",
-
-                        backgroundColor: "#f5f5f5",
-
-                        borderRadius: "10px",
-
-                        borderLeft: `4px solid ${UNIBO_RED}`,
-                      }}
-                    >
-                      <p
-                        style={{
-                          fontSize: "13px",
-
-                          fontWeight: "bold",
-
-                          margin: "0 0 8px 0",
-
-                          color: UNIBO_BLACK,
-                        }}
-                      >
-                        🕒 Orari di apertura
-                      </p>
-
-                      {selectedRoom.openingHours.map((item, index) => {
-                        const dayMap = {
-                          Monday: "Lun",
-
-                          Tuesday: "Mar",
-
-                          Wednesday: "Mer",
-
-                          Thursday: "Gio",
-
-                          Friday: "Ven",
-
-                          Saturday: "Sab",
-
-                          Sunday: "Dom",
-                        };
-
-                        // TRUCCO: Convertiamo sempre in array se è una stringa
-
-                        const daysArray = Array.isArray(item.dayOfWeek)
-                          ? item.dayOfWeek
-                          : [item.dayOfWeek];
-
-                        let daysText = "";
-
-                        if (daysArray.length === 7) {
-                          daysText = "Tutti i giorni";
-                        } else if (
-                          daysArray.length === 5 &&
-                          daysArray.includes("Monday") &&
-                          daysArray.includes("Friday")
-                        ) {
-                          daysText = "Lun - Ven";
-                        } else {
-                          // Ora .map() funzionerà sempre perché daysArray è sicuramente un array
-
-                          daysText = daysArray
-
-                            .map((d) => dayMap[d] || d)
-
-                            .join(", ");
-                        }
-
-                        return (
-                          <div
-                            key={index}
-                            style={{
-                              display: "flex",
-
-                              justifyContent: "space-between",
-
-                              fontSize: "12px",
-
-                              marginBottom: "4px",
-
-                              gap: "10px",
-                            }}
-                          >
-                            <span
-                              style={{
-                                color: "#666",
-
-                                fontWeight: "500",
-
-                                flexShrink: 0,
-                              }}
-                            >
-                              {daysText}:
-                            </span>
-
-                            <span
-                              style={{
-                                fontWeight: "600",
-
-                                color:
-                                  item.opens === "00:00" &&
-                                  item.closes === "00:00"
-                                    ? "#999"
-                                    : UNIBO_RED,
-
-                                textAlign: "right",
-                              }}
-                            >
-                              {item.opens === "00:00" && item.closes === "00:00"
-                                ? "Chiuso"
-                                : `${item.opens} - ${item.closes}`}
-                            </span>
-                          </div>
-                        );
-                      })}
+                  return (
+                    <div key={index} style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", marginBottom: "4px", gap: "10px" }}>
+                      <span style={{ color: "#666", fontWeight: "500" }}>{daysText}:</span>
+                      <span style={{ fontWeight: "600", color: UNIBO_RED }}>
+                        {item.opens === "00:00" && item.closes === "00:00" ? "Chiuso" : `${item.opens} - ${item.closes}`}
+                      </span>
                     </div>
-                  )}
-              </div>
-
-              {/* CONTENITORE BOTTONI: Portami qui + Condividi */}
-
-              <div
-                style={{
-                  display: "flex",
-
-                  gap: "10px",
-
-                  alignItems: "center",
-
-                  marginTop: "auto",
-
-                  width: "100%",
-                }}
-              >
-                <button
-                  className="btn-nav"
-                  style={{ flex: 1 }}
-                  onClick={() => {
-                    setDestQuery(selectedRoom.name);
-
-                    setPanelState("partial");
-
-                    setSelectedRoom(null);
-
-                    console.log(
-                      "Destinazione impostata su:",
-                      selectedRoom.name,
-                    );
-                  }}
-                >
-                  Portami qui
-                </button>
-
-                <button
-                  onClick={handleShare}
-                  style={{
-                    width: "45px",
-
-                    height: "45px",
-
-                    padding: "10px",
-
-                    borderRadius: "12px",
-
-                    border: "none",
-
-                    background: "#f0f0f0", // Sfondo nero
-
-                    cursor: "pointer",
-
-                    display: "flex",
-
-                    alignItems: "center",
-
-                    justifyContent: "center",
-                  }}
-                >
-                  <Share
-                    size={50}
-                    color="#212121" // DEVE essere bianco per vedersi sul nero
-                    strokeWidth={2.5}
-                  />
-                </button>
-              </div>
-            </div>
-
-            {showToast && (
-              <div
-                style={{
-                  position: "fixed",
-
-                  bottom: "10px",
-
-                  left: "50%",
-
-                  transform: "translateX(-50%)",
-
-                  background: "rgba(0,0,0,0.8)",
-
-                  color: "white",
-
-                  padding: "10px 20px",
-
-                  borderRadius: "20px",
-
-                  zIndex: 10000,
-
-                  fontSize: "14px",
-
-                  fontWeight: "500",
-
-                  pointerEvents: "none",
-
-                  animation: "fadeInOut 2s ease",
-
-                  width: "50%",
-
-                  textAlign: "center",
-                }}
-              >
-                Link copiato negli appunti
+                  );
+                })}
               </div>
             )}
-          </div>
-        </>
+        </div>
+
+        {/* CONTENITORE BOTTONI */}
+        <div style={{ display: "flex", gap: "10px", alignItems: "center", marginTop: "10px", width: "100%" }}>
+          <button
+            className="btn-nav"
+            style={{ flex: 1 }}
+            onClick={() => {
+              setDestQuery(selectedRoom.name);
+              setPanelState("partial");
+              setSelectedRoom(null);
+            }}
+          >
+            Portami qui
+          </button>
+
+          <button
+            onClick={handleShare}
+            style={{
+              width: "45px",
+              height: "45px",
+              padding: "10px",
+              borderRadius: "12px",
+              border: "none",
+              background: "#f0f0f0",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Share size={24} color="#212121" strokeWidth={2.5} />
+          </button>
+        </div>
+      </div>
+
+      {showToast && (
+        <div style={{ position: "fixed", bottom: "10px", left: "50%", transform: "translateX(-50%)", background: "rgba(0,0,0,0.8)", color: "white", padding: "10px 20px", borderRadius: "20px", zIndex: 10000, fontSize: "14px", animation: "fadeInOut 2s ease", textAlign: "center" }}>
+          Link copiato negli appunti
+        </div>
       )}
+    </div>
+  </>
+)}
 
       <div
         className={`bottom-sheet ${panelState}`}
