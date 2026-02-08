@@ -1366,6 +1366,7 @@ const startNavigation = async (startName, destName) => {
               visible: true,
               color: UNIBO_RED,
             },
+            
 }}
         />
       )}
@@ -1585,6 +1586,8 @@ function MapManagers({ onBlueDotInit }) {
     });
 
     onBlueDotInit(bd);
+
+    bd.disable();
 
     return () => {
       bd.disable();
